@@ -1,0 +1,126 @@
+Docker
+
+
+[root@sreenilayam Downloads]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[root@sreenilayam Downloads]# docker run -it --name amitubuntu ubuntu:14.04 /bin/bash
+Unable to find image 'ubuntu:14.04' locally
+14.04: Pulling from ubuntu
+
+778271865af4: Pull complete 
+fd9874a733c9: Pull complete 
+29aaf161ba98: Pull complete 
+a1734d8f47d6: Pull complete 
+ddbba369011b: Pull complete 
+7e633c24dfa0: Pull complete 
+Digest: sha256:cdfbecba93630b8660023dd016614369513d5b81d06c3e70a19bd5f379837328
+Status: Downloaded newer image for ubuntu:14.04
+root@d1b32c682f31:/# apt-get update
+Ign http://archive.ubuntu.com trusty InRelease
+
+
+root@d1b32c682f31:/# apt-get install update
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+E: Unable to locate package update
+root@d1b32c682f31:/# exit            
+exit
+[root@sreenilayam Downloads]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[root@sreenilayam Downloads]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                        PORTS               NAMES
+d1b32c682f31        ubuntu:14.04        "/bin/bash"         11 minutes ago      Exited (100) 23 seconds ago                       amitubuntu          
+[root@sreenilayam Downloads]# docker start d1b32c682f31
+d1b32c682f31
+[root@sreenilayam Downloads]# docker attach d1b32c682f31
+root@d1b32c682f31:/# 
+root@d1b32c682f31:/# [root@sreenilayam Downloads]# 
+[root@sreenilayam Downloads]# 
+[root@sreenilayam Downloads]# 
+[root@sreenilayam Downloads]# 
+[root@sreenilayam Downloads]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+d1b32c682f31        ubuntu:14.04        "/bin/bash"         14 minutes ago      Up 2 minutes                            amitubuntu   
+
+
+docker ps -a -- to see the vm process status
+docker attach - for login to virtual machine using container id
+ctrl+p+q   for exiting safely from Virtual machine
+
+
+
+
+docker run -it --name webs -p 8282:80 ubuntu:14.04 /bin/bash   --   to set the the port for server   :-     8282 is the hostname port and 80 is the container port
+
+[root@sreenilayam Downloads]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES
+de520a28c97d        ubuntu:14.04        "/bin/bash"         40 minutes ago      Up 40 minutes       0.0.0.0:8282->80/tcp   webs                
+d1b32c682f31        ubuntu:14.04        "/bin/bash"         About an hour ago   Up 55 minutes                              amitubuntu          
+[root@sreenilayam Downloads]# docker stop de520a28c97d
+de520a28c97d
+[root@sreenilayam Downloads]# docker stop d1b32c682f31
+d1b32c682f31
+[root@sreenilayam Downloads]# docker rm de520a28c97d
+de520a28c97d
+[root@sreenilayam Downloads]# docker rm d1b32c682f31
+d1b32c682f31
+[root@sreenilayam Downloads]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+[root@sreenilayam Downloads]# 
+
+
+
+[root@sreenilayam Desktop]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+ubuntu              14.04               7e633c24dfa0        2 weeks ago         188 MB
+
+
+docker run -it -p 8000:80 -v /home/amith/Desktop/shareit:/var/www/html --name cont1 ubuntu:14.04 /bin/bash
+apt-get update
+apt-get install apache2
+service apache2 status
+service apache2 start
+
+go to host shared folder and make some test.txt and check 
+
+
+[root@sreenilayam shareit]# docker run -it -v /home/amith/Desktop/shareit:/var/www/html --name cont2 ubuntu:14.04 /bin/bash
+root@e5956ec80cfd:/# apt-get update
+
+
+
+
+*bbcT(ap&pu&NEqf34
+
+
+root@bbc02d85645b:/var/www/html/wordpress/wp-admin/images# [root@sreenilayam shareit]# 
+[root@sreenilayam shareit]# 
+[root@sreenilayam shareit]# 
+[root@sreenilayam shareit]# 
+[root@sreenilayam shareit]# 
+[root@sreenilayam shareit]# docker ps -a
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS                  NAMES
+bbc02d85645b        ubuntu:14.04        "/bin/bash"         42 minutes ago      Up 41 minutes       0.0.0.0:8282->80/tcp   wordpress           
+e5956ec80cfd        ubuntu:14.04        "/bin/bash"         About an hour ago   Up About an hour                           cont2               
+8c38e5abe038        ubuntu:14.04        "/bin/bash"         About an hour ago   Up About an hour    0.0.0.0:8000->80/tcp   cont1               
+[root@sreenilayam shareit]# docker commit -m "my-image" -a "amit" bbc02d85645b my-wp-image:latest
+f9d6e573bab764acec6be610f85d2a4cf83c65ace54efb4f9cc9a64a07deb015
+[root@sreenilayam shareit]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
+my-wp-image         latest              f9d6e573bab7        18 seconds ago      415.6 MB
+ubuntu              14.04               7e633c24dfa0        2 weeks ago         188 MB
+
+
+  992  docker attach 8c38e5abe038
+  993  ls
+  994  docker attach 8c38e5abe038
+  995  docker run -it -v /home/amith/Desktop/shareit:/var/www/html --name cont2 ubuntu:14.04 /bin/bash
+  996  docker run -it --name wordpress -p 8282:80 ubuntu:14.04 /bin/bash
+  997  docker ps -a
+  998  docker commit -m "my-image" -a "amit" bbc02d85645b my-wp-image:latest
+  999  docker images
+ 1000  docker status
+ 1001  docker --version
+
+
